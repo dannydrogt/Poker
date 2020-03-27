@@ -1,3 +1,5 @@
+const SHOWDOWN_TIMEOUT = 5000;
+
 var Deck = require('./deck'),
 	Pot = require('./pot');
 
@@ -409,7 +411,7 @@ Table.prototype.showdown = function() {
 	var that = this;
 	setTimeout( function(){
 		that.endRound();
-	}, 2000 );
+	}, SHOWDOWN_TIMEOUT );
 };
 
 /**
