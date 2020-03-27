@@ -16,7 +16,7 @@
 			<th class="dark-border">Big blind/Small blind</th>
 			<th>Aantal spelers</th>
 		</tr>
-		<tr ng-repeat="table in lobbyTables">
+		<tr ng-repeat="table in lobbyTables" ng-show="table.id == 1">
 			<td><a href="/table-{{table.seatsCount}}/{{table.id}}">{{table.name}}</a></td>
 			<td class="centered-text">{{table.bigBlind}}/{{table.smallBlind}}</td>
 			<td class="centered-text">{{table.playersSeatedCount}}/{{table.seatsCount}}</td>

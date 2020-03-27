@@ -8,7 +8,7 @@
 		<div class="player-content" ng-show="player.name">
 			<div ng-show="!notifications[seatIndex].message">
 				<span>{{player.name}}</span>
-				<span ng-show="player.sittingIn">{{player.chipsInPlay}}</span>
+				<span ng-show="player.sittingIn"><i class="fas fa-coins"></i> {{player.chipsInPlay}}</span>
 				<span ng-show="!player.sittingIn">Sitting Out</span>
 			</div>
 			<div ng-show="notifications[seatIndex].message">

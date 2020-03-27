@@ -411,6 +411,6 @@ function htmlEntities(str) {
 }
 
 tables[0] = new Table( 0, '10-persoons tafel', eventEmitter(0), 10, 2, 1, 200, 40, false );
-tables[1] = new Table( 1, '6-persoons tafel', eventEmitter(1), 6, 4, 2, 400, 80, false );
+tables[1] = new Table( 1, '6-persoons tafel', eventEmitter(1), 6, 10, 5, 500, 80, false );
 tables[2] = new Table( 2, '2-persoons tafel', eventEmitter(2), 2, 8, 4, 800, 160, false );
 tables[3] = new Table( 3, '2-persoon privétafel', eventEmitter(3), 6, 20, 10, 2000, 400, true );

@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<div class="cell">
-			<button class="control-button" ng-click="fold()" ng-show="showFoldButton()">Fold</button>
+			<button class="control-button" ng-click="fold()" ng-show="showFoldButton()">Ga weg</button>
 			<button class="control-button" ng-click="postBlind(false)" ng-show="actionState === 'postSmallBlind' || actionState === 'postBigBlind'">Sit Out</button>
 			<button class="control-button" ng-click="leaveTable()" ng-show="showLeaveTableButton()">Verlaat tafel</button>
 		</div>
@@ -88,11 +88,11 @@
 			<button class="control-button" ng-click="postBlind(true)" ng-show="actionState === 'postSmallBlind'">Small Blind ({{table.smallBlind}})</button>
 			<button class="control-button" ng-click="postBlind(true)" ng-show="actionState === 'postBigBlind'">Big Blind ({{table.bigBlind}})</button>
 			<button class="control-button" ng-click="check()" ng-show="showCheckButton()">Check</button>
-			<button class="control-button" ng-click="call()" ng-show="showCallButton()">Call {{callAmount()}}</button>
+			<button class="control-button" ng-click="call()" ng-show="showCallButton()">Ga mee met {{callAmount()}}</button>
 		</div>
 		<div class="cell">
-			<button class="control-button" ng-click="bet()" ng-show="showBetButton()">Bet {{betAmount}}</button>
-			<button class="control-button" ng-click="raise()" ng-show="showRaiseButton()">Raise to {{betAmount}}</button>
+			<button class="control-button" ng-click="bet()" ng-show="showBetButton()">Zet {{betAmount}} in</button>
+			<button class="control-button" ng-click="raise()" ng-show="showRaiseButton()">Verhoog naar {{betAmount}}</button>
 		</div>
 		<div class="double-cell">
 			<div class="cell-content">

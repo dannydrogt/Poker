@@ -261,7 +261,7 @@ div.player-wrap {
 
 	.player-cards {
 		overflow: hidden;
-	    height: 60px;
+	    height: 65px;
 	    left: 32px;
 	    position: absolute;
 	    top: 0px;
@@ -269,12 +269,14 @@ div.player-wrap {
 	    -webkit-transition: top 0.4s ease;
     	transition: top 0.4s ease;
 	    &.dealt {
-	    	top: -60px;
+	    	top: -65px;
 	    }
 	    .card:first-child {
-	    	left: 0;
+			left: 0;
+			top: 0;
 	    }
 	    .card {
+			top: 5px;
 		    left: 28px;
 		    position: absolute;
 	    }
@@ -543,14 +545,18 @@ div#board-wrap {
 
 .dealer-button {
 	position: absolute;
-	border: 2px solid @light-purple;
+	//border: 2px solid @light-purple;
+	border: 2px solid black;
 	border-radius: 20px;
     width: 12%;
     height: 20%;
     text-align: center;
-    background-color: @transparent-purple;
+    //background-color: @transparent-purple;
+	background-color: white;
+	color: black;
     line-height: 1.25;
-    box-shadow: 0 3px 0 0 #604FAD;
+    //box-shadow: 0 3px 0 0 #604FAD;
+    box-shadow: 0 3px 0 0 #444444;
 }
 
 #bets-0 {
@@ -834,7 +840,13 @@ div#board-wrap {
 				}
 
 				.log-message {
+					.red {
+						color: red;
+					}
 
+					.black {
+						color: black;
+					}
 				}
 			}
 		}
@@ -880,6 +892,7 @@ div#board-wrap {
 			height: auto !important;
 			padding: 20px 10px;
 			font-size: 1.375em;
+			color: white;
 		}
 	}
 
@@ -930,4 +943,42 @@ div.cell {
 div.player-wrap,
 div.player-wrap.side {
 	margin: 0;
+}
+
+.bets > span {
+    position: absolute;
+    border: 2px solid #9880e9;
+    border-radius: 20px;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    background-color: rgba(46,31,62,0.9);
+    line-height: 22px;
+    box-shadow: 0 3px 0 0 #604FAD;
+	font-size: 12px;
+	color: white;
+}
+
+#pot-wrap #pot {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+}
+
+div.seat {
+	padding: 12% 0;
+	color: white;
+
+	a {
+		color: white;
+	}
+
+	i[class^='fa'] {
+		font-size: 14px;
+	}
+}
+
+div.seat.active {
+    color: yellow;
+    border: 5px solid yellow;
+    box-shadow: 0 0 5px 0 yellow;
 }

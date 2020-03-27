@@ -136,13 +136,20 @@ Player.prototype.evaluateHand = function( board ) {
 	var cards = this.cards.concat( board );
 	var cardNamess = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
     var cardNames = { 'A': 'ace', 'K': 'king', 'Q': 'queen', 'J': 'jack', 'T': 'ten', '9': 'nine', '8': 'eight', '7': 'seven', '6': 'six', '5': 'five', '4': 'four', '3': 'three', '2': 'deuce' }
+    var cardNamesSingular = { 'A': 'aas', 'K': 'heer', 'Q': 'vrouw', 'J': 'boer', 'T': 'tien', '9': 'negen', '8': 'acht', '7': 'zeven', '6': 'zes', '5': 'vijf', '4': 'vier', '3': 'drie', '2': 'twee' }
+    var cardNamesPlural = { 'A': 'azen', 'K': 'heren', 'Q': 'vouwen', 'J': 'boeren', 'T': 'tienen', '9': 'negens', '8': 'achten', '7': 'zevens', '6': 'zessen', '5': 'vijven', '4': 'vieren', '3': 'drieën', '2': 'tweeën' }
 
     // Returns the name of the card, in singular or in plural
     var getCardName = function( cardValue, plural ) {
+        // if( typeof plural !== 'undefined' && plural == true ) {
+        //     return cardValue == '6' ? cardNames[cardValue] + 'es' : cardNames[cardValue] + 's';
+        // } else {
+        //     return cardNames[cardValue];
+        // }
         if( typeof plural !== 'undefined' && plural == true ) {
-            return cardValue == '6' ? cardNames[cardValue] + 'es' : cardNames[cardValue] + 's';
+            return cardNamesPlural[cardValue];
         } else {
-            return cardNames[cardValue];
+            return cardNamesSingular[cardValue];
         }
     }
 
@@ -426,11 +433,11 @@ Player.prototype.evaluateHand = function( board ) {
 			evaluatedHand.rating = rateHand( evaluatedHand.cards );
 			break;
 		case 'pair':
-            evaluatedHand.name = 'a pair of ' + getCardName( evaluatedHand.cards[0][0], true );
+            evaluatedHand.name = 'een paar ' + getCardName( evaluatedHand.cards[0][0], true );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 1000000;
 			break;
 		case 'two pair':
-			evaluatedHand.name = 'two pair, ' + getCardName( evaluatedHand.cards[0][0], true ) + ' and ' + getCardName( evaluatedHand.cards[2][0], true );
+			evaluatedHand.name = 'twee paar, ' + getCardName( evaluatedHand.cards[0][0], true ) + ' en ' + getCardName( evaluatedHand.cards[2][0], true );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 2000000;
 			break;
 		case 'three of a kind':
@@ -438,15 +445,15 @@ Player.prototype.evaluateHand = function( board ) {
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 3000000;
 			break;
 		case 'straight':
-            evaluatedHand.name = 'a straight to ' + getCardName( straight[0][0] );
+            evaluatedHand.name = 'een straight tot ' + getCardName( straight[0][0] );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 4000000;
 			break;
 		case 'flush':
-            evaluatedHand.name = 'a flush, ' + getCardName( evaluatedHand.cards[0][0] ) + ' high';
+            evaluatedHand.name = 'een flush, ' + getCardName( evaluatedHand.cards[0][0] ) + ' high';
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 5000000;
 			break;
 		case 'full house':
-			evaluatedHand.name = 'a full house, ' + getCardName( evaluatedHand.cards[0][0], true ) + ' full of ' + getCardName( evaluatedHand.cards[3][0], true );
+			evaluatedHand.name = 'een full house, ' + getCardName( evaluatedHand.cards[0][0], true ) + ' full of ' + getCardName( evaluatedHand.cards[3][0], true );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 6000000;
 			break;
 		case 'four of a kind':
@@ -454,11 +461,11 @@ Player.prototype.evaluateHand = function( board ) {
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 7000000;
 			break;
 		case 'straight flush':
-			evaluatedHand.name = 'a straight flush, ' + getCardName( evaluatedHand.cards[4][0] ) + ' to ' + getCardName( evaluatedHand.cards[0][0] );
+			evaluatedHand.name = 'een straight flush, ' + getCardName( evaluatedHand.cards[4][0] ) + ' to ' + getCardName( evaluatedHand.cards[0][0] );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 8000000;
 			break;
 		case 'royal flush':
-			evaluatedHand.name = 'a royal flush';
+			evaluatedHand.name = 'een royal flush';
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 8000000;
 			break;
 	}

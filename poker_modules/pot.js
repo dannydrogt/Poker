@@ -109,6 +109,20 @@ Pot.prototype.addPlayersBets = function( player ) {
   }
 }
 
+Pot.prototype.createHtmlHand = function(htmlHand) {
+  let result = htmlHand.replace(/s/g, '&#9824;')
+    .replace(/c/g, '&#9827;')
+    .replace(/h/g, '&#9829;')
+    .replace(/d/g, '&#9830;');
+
+  result = result.replace(/&#9824;/g, '<span class="black">&#9824;</span>')
+    .replace(/&#9827;/g, '<span class="black">&#9827;</span>')
+    .replace(/&#9829;/g, '<span class="red">&#9829;</span>')
+    .replace(/&#9830;/g, '<span class="red">&#9830;</span>');
+
+  return result;
+}
+
 Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
   var potsCount = this.pots.length;
   var messages = [];
@@ -132,8 +146,9 @@ Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
     if( winners.length === 1 ) {
       players[winners[0]].public.chipsInPlay += this.pots[i].amount;
       var htmlHand = '[' + players[winners[0]].evaluatedHand.cards.join(', ') + ']';
-      htmlHand = htmlHand.replace(/s/g, '&#9824;').replace(/c/g, '&#9827;').replace(/h/g, '&#9829;').replace(/d/g, '&#9830;');
-      messages.push( players[winners[0]].public.name + ' wins the pot (' + this.pots[i].amount + ') with ' + players[winners[0]].evaluatedHand.name + ' ' + htmlHand );
+      htmlHand = this.createHtmlHand(htmlHand);
+      //htmlHand = htmlHand.replace('&#9824;', '<span class="black">&#9824;</span>').replace('&#9827;', '<span class="black">&#9827;</span>').replace('&#9829;', '<span class="red">&#9829;</span>').replace('&#9830;', '<span class="red">&#9830;</span>');
+      messages.push( players[winners[0]].public.name + ' wint de pot (' + this.pots[i].amount + ') met ' + players[winners[0]].evaluatedHand.name + ' ' + htmlHand );
     } else {
       var winnersCount = winners.length;
 
@@ -150,7 +165,8 @@ Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
 
         players[winners[j]].public.chipsInPlay += playersWinnings;
         var htmlHand = '[' + players[winners[j]].evaluatedHand.cards.join(', ') + ']';
-        htmlHand = htmlHand.replace(/s/g, '&#9824;').replace(/c/g, '&#9827;').replace(/h/g, '&#9829;').replace(/d/g, '&#9830;');
+        htmlHand = this.createHtmlHand(htmlHand);
+        //htmlHand = htmlHand.replace('&#9824;', '<span class="black">&#9824;</span>').replace('&#9827;', '<span class="black">&#9827;</span>').replace('&#9829;', '<span class="red">&#9829;</span>').replace('&#9830;', '<span class="red">&#9830;</span>');
         messages.push( players[winners[j]].public.name + ' ties the pot (' + playersWinnings + ') with ' + players[winners[j]].evaluatedHand.name + ' ' + htmlHand );
       }
     }
