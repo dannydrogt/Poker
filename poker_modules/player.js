@@ -429,7 +429,7 @@ Player.prototype.evaluateHand = function( board ) {
 	
 	switch( evaluatedHand.rank ) {
 		case 'high card':
-			evaluatedHand.name = getCardName( evaluatedHand.cards[0][0] ) + ' high';
+			evaluatedHand.name = getCardName( evaluatedHand.cards[0][0] ) + ' hoog';
 			evaluatedHand.rating = rateHand( evaluatedHand.cards );
 			break;
 		case 'pair':
@@ -449,7 +449,7 @@ Player.prototype.evaluateHand = function( board ) {
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 4000000;
 			break;
 		case 'flush':
-            evaluatedHand.name = 'een flush, ' + getCardName( evaluatedHand.cards[0][0] ) + ' high';
+            evaluatedHand.name = 'een flush, ' + getCardName( evaluatedHand.cards[0][0] ) + ' hoog';
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 5000000;
 			break;
 		case 'full house':
@@ -461,7 +461,7 @@ Player.prototype.evaluateHand = function( board ) {
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 7000000;
 			break;
 		case 'straight flush':
-			evaluatedHand.name = 'een straight flush, ' + getCardName( evaluatedHand.cards[4][0] ) + ' to ' + getCardName( evaluatedHand.cards[0][0] );
+			evaluatedHand.name = 'een straight flush, ' + getCardName( evaluatedHand.cards[4][0] ) + ' tot ' + getCardName( evaluatedHand.cards[0][0] );
 			evaluatedHand.rating = rateHand( evaluatedHand.cards ) + 8000000;
 			break;
 		case 'royal flush':

@@ -444,7 +444,7 @@ Table.prototype.playerPostedSmallBlind = function() {
 		message: this.seats[this.public.activeSeat].public.name + ' heeft een small blind ingezet',
 		action: 'bet',
 		seat: this.public.activeSeat,
-		notification: 'Posted blind'
+		notification: 'Blind ingezet'
 	});
 	this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
 	this.emitEvent( 'table-data', this.public );
@@ -462,7 +462,7 @@ Table.prototype.playerPostedBigBlind = function() {
 		message: this.seats[this.public.activeSeat].public.name + ' heeft een big blind ingezet',
 		action: 'bet',
 		seat: this.public.activeSeat,
-		notification: 'Posted blind'
+		notification: 'Blind ingezet'
 	});
 	this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
 	this.emitEvent( 'table-data', this.public );
@@ -529,7 +529,7 @@ Table.prototype.playerCalled = function() {
 		message: this.seats[this.public.activeSeat].public.name + ' gaat mee',
 		action: 'call',
 		seat: this.public.activeSeat,
-		notification: 'Call'
+		notification: 'Gaat mee'
 	});
 
 	this.emitEvent( 'table-data', this.public );
@@ -552,7 +552,7 @@ Table.prototype.playerBetted = function( amount ) {
 		message: this.seats[this.public.activeSeat].public.name + ' betted ' + amount,
 		action: 'bet',
 		seat: this.public.activeSeat,
-		notification: 'Bet ' + amount
+		notification: 'Zet ' + amount + ' in'
 	});
 
 	this.emitEvent( 'table-data', this.public );
@@ -578,7 +578,7 @@ Table.prototype.playerRaised = function( amount ) {
 		message: this.seats[this.public.activeSeat].public.name + ' verhoogt naar ' + this.public.biggestBet,
 		action: 'raise',
 		seat: this.public.activeSeat,
-		notification: 'Raise ' + raiseAmount
+		notification: 'Verhoogt ' + raiseAmount
 	});
 	this.emitEvent( 'table-data', this.public );
 
