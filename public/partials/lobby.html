@@ -2,19 +2,19 @@
 	<div class="modal-wrap" ng-show="!$root.screenName">
 		<div class="modal">
 			<form ng-submit="register()">
-				<label for="screen-name-input">Enter your screen name</label>
+				<label for="screen-name-input">Vul hier je naam in</label>
 				<p class="table-requirements error" ng-show="registerError">{{registerError}}</p>
-				<input id="screen-name-input" class="input-left" type="text" ng-model="newScreenName" ng-trim="true" required>
-				<input type="submit" value="Submit">
+				<input id="screen-name-input" class="input-left" type="text" ng-model="newScreenName" ng-trim="true" required autofocus>
+				<input type="submit" value="Verstuur">
 			</form>
 		</div>
 		<div id="curtain" ng-show="!$root.screenName"></div>
 	</div>
 	<table id="table-list">
 		<tr>
-			<th class="dark-border">Name</th>
-			<th class="dark-border">BB/SB</th>
-			<th>Players</th>
+			<th class="dark-border">Naam</th>
+			<th class="dark-border">Big blind/Small blind</th>
+			<th>Aantal spelers</th>
 		</tr>
 		<tr ng-repeat="table in lobbyTables">
 			<td><a href="/table-{{table.seatsCount}}/{{table.id}}">{{table.name}}</a></td>
@@ -23,6 +23,7 @@
 		</tr>
 	</table>
 </div>			
+<br/>
 <p id="developer-info">
 	Developed by George Balasis. View the code on <a href="https://github.com/geobalas/Poker" target="_blank">github</a>.<br/>
 	Modified by UniversePokerCrew.

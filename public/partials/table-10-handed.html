@@ -8,7 +8,7 @@
 				<span class="table-requirements">You have a total of {{$root.totalChips}} chips</span>
 				<span class="table-requirements error" ng-show="buyInError">{{buyInError}}</span>
 				<input class="input-left" type="number" ng-model="buyInAmount" ng-trim="true" required>
-				<input type="submit" value="Sit in">
+				<input type="submit" value="Neem plaats">
 			</form>
 		</div>
 		<div id="curtain" ng-show="buyInModalVisible" ng-click="buyInModalVisible=false"></div>
@@ -88,10 +88,10 @@
 		<div class="cell">
 			<button class="control-button" ng-click="fold()" ng-show="showFoldButton()">Fold</button>
 			<button class="control-button" ng-click="postBlind(false)" ng-show="actionState === 'postSmallBlind' || actionState === 'postBigBlind'">Sit Out</button>
-			<button class="control-button" ng-click="leaveTable()" ng-show="showLeaveTableButton()">Leave Table</button>
+			<button class="control-button" ng-click="leaveTable()" ng-show="showLeaveTableButton()">Verlaat tafel</button>
 		</div>
 		<div class="cell">
-			<button class="control-button" ng-click="sitIn()" ng-show="$root.sittingOnTable !== null && !$root.sittingIn">Sit In</button>
+			<button class="control-button" ng-click="sitIn()" ng-show="$root.sittingOnTable !== null && !$root.sittingIn">Neem plaats</button>
 			<button class="control-button" ng-click="postBlind(true)" ng-show="actionState === 'postSmallBlind'">Small Blind ({{table.smallBlind}})</button>
 			<button class="control-button" ng-click="postBlind(true)" ng-show="actionState === 'postBigBlind'">Big Blind ({{table.bigBlind}})</button>
 			<button class="control-button" ng-click="check()" ng-show="showCheckButton()">Check</button>

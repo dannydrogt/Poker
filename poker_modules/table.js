@@ -438,7 +438,7 @@ Table.prototype.playerPostedSmallBlind = function() {
 	var bet = this.seats[this.public.activeSeat].public.chipsInPlay >= this.public.smallBlind ? this.public.smallBlind : this.seats[this.public.activeSeat].public.chipsInPlay;
 	this.seats[this.public.activeSeat].bet( bet );
 	this.log({
-		message: this.seats[this.public.activeSeat].public.name + ' posted the small blind',
+		message: this.seats[this.public.activeSeat].public.name + ' heeft een small blind ingezet',
 		action: 'bet',
 		seat: this.public.activeSeat,
 		notification: 'Posted blind'
@@ -456,7 +456,7 @@ Table.prototype.playerPostedBigBlind = function() {
 	var bet = this.seats[this.public.activeSeat].public.chipsInPlay >= this.public.bigBlind ? this.public.bigBlind : this.seats[this.public.activeSeat].public.chipsInPlay;
 	this.seats[this.public.activeSeat].bet( bet );
 	this.log({
-		message: this.seats[this.public.activeSeat].public.name + ' posted the big blind',
+		message: this.seats[this.public.activeSeat].public.name + ' heeft een big blind ingezet',
 		action: 'bet',
 		seat: this.public.activeSeat,
 		notification: 'Posted blind'
@@ -611,7 +611,7 @@ Table.prototype.playerSatOnTheTable = function( player, seat, chips ) {
  */
 Table.prototype.playerSatIn = function( seat ) {
 	this.log({
-		message: this.seats[seat].public.name + ' sat in',
+		message: this.seats[seat].public.name + ' neemt plaats',
 		action: '',
 		seat: '',
 		notification: ''
@@ -637,7 +637,7 @@ Table.prototype.playerSatIn = function( seat ) {
  */
 Table.prototype.playerLeft = function( seat ) {
 	this.log({
-		message: this.seats[seat].public.name + ' left',
+		message: this.seats[seat].public.name + ' heeft de tafel verlaten',
 		action: '',
 		seat: '',
 		notification: ''

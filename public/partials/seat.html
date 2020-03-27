@@ -4,7 +4,7 @@
 		<div class="card" ng-show="seatOccupied(seatIndex)" ng-class="getCardClass( seatIndex, 1 )"></div>
 	</div>
 	<div class="seat" ng-show="seatOccupied(seatIndex)" ng-class="{active: activeSeat===seatIndex}">
-		<a class="sitIn" ng-show="!player.name" ng-click="showBuyInModal( {seat:seatIndex} )">Sit In</a>
+		<a class="sitIn" ng-show="!player.name" ng-click="showBuyInModal( {seat:seatIndex} )">Neem plaats</a>
 		<div class="player-content" ng-show="player.name">
 			<div ng-show="!notifications[seatIndex].message">
 				<span>{{player.name}}</span>

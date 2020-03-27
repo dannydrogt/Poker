@@ -112,6 +112,12 @@ table {
 		text-align: center;
 	}
 	margin: 40px 0 0;
+
+	tr {
+		&:hover {
+			background-color: rgba(red(#9880e9), green(#9880e9), blue(#9880e9), 0.2);
+		}
+	}
 }
 
 #table {
@@ -188,7 +194,8 @@ input[type="range"] {
 }
 
 .sitIn {
-	padding: 12% 34%;
+	//padding: 12% 34%;
+	padding: 5px 10px;
 	cursor: pointer;
 }
 
@@ -635,7 +642,7 @@ div#board-wrap {
 		    margin-bottom: 10px;
 		}
 		.input-left {
-			margin-right: 32px;
+			//margin-right: 32px;
 			width: 50%;
 		}
 	}
@@ -803,4 +810,124 @@ div#board-wrap {
 	#developer-info {
 		font-size: 1em;
 	}
+}
+
+.chat-cell {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 220px !important;
+
+	#chat {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+
+		#messages {
+			flex-grow: 1;
+			margin-bottom: 8px;
+
+			> div {
+				small {
+					font-weight: bold;
+				}
+
+				.log-message {
+
+				}
+			}
+		}
+
+		form {
+			margin-bottom: 8px;
+			display: flex;
+			display: none;
+
+			input[type='text'] {
+				width: 150px !important;
+				flex-grow: 1;				
+			}
+
+			input[type='submit'] {
+				margin-right: 8px;
+			}
+		}
+	}
+}
+
+.controls {
+	position: fixed !important;
+	top: 0;
+	right: 0;
+	width: 220px !important;
+	height: 100vh !important;
+	display: flex !important;
+	flex-direction: column;
+	padding: 20px 0;
+
+	div.cell {
+		float: none !important;
+		width: 100% !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: auto;
+
+		button {
+			margin: 0;
+			margin-bottom: 10px;
+			height: auto !important;
+			padding: 20px 10px;
+			font-size: 1.375em;
+		}
+	}
+
+	div.double-cell {
+		float: none !important;
+		width: 100% !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: auto;
+	}
+
+	input[type='range'] {
+		width: 100%;
+	}
+}
+
+#content {
+	max-width: ~"calc(100vw - 440px)";
+	height: 100vh;
+}
+
+#table-wrap {
+	//height: 100%;
+	height: 600px;
+	top: 50%;
+	margin-top: -300px;
+}
+
+div.row {
+	//height: 33%;
+	height: 200px;
+}
+
+#table {
+	//height: 69%;
+	//top: 16%;
+	height: 400px;
+	top: 100px;
+}
+
+div.cell {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.player-wrap,
+div.player-wrap.side {
+	margin: 0;
 }
