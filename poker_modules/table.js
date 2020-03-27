@@ -478,7 +478,7 @@ Table.prototype.playerFolded = function() {
 		message: this.seats[this.public.activeSeat].public.name + ' gaat weg',
 		action: 'fold',
 		seat: this.public.activeSeat,
-		notification: 'Fold'
+		notification: 'Gaat weg'
 	});
 	this.emitEvent( 'table-data', this.public );
 
@@ -549,7 +549,7 @@ Table.prototype.playerBetted = function( amount ) {
 	this.public.biggestBet = this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet;
 
 	this.log({
-		message: this.seats[this.public.activeSeat].public.name + ' betted ' + amount,
+		message: this.seats[this.public.activeSeat].public.name + ' zet ' + amount + ' in',
 		action: 'bet',
 		seat: this.public.activeSeat,
 		notification: 'Zet ' + amount + ' in'
@@ -694,7 +694,7 @@ Table.prototype.playerSatOut = function( seat, playerLeft ) {
 	// If the player didn't leave, log the action as "player sat out"
 	if( !playerLeft ) {
 		this.log({
-			message: this.seats[seat].public.name + ' sat out',
+			message: this.seats[seat].public.name + ' pauzeert deelname',
 			action: '',
 			seat: '',
 			notification: ''
