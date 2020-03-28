@@ -14,6 +14,9 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.myCards = ['', ''];
 	$scope.mySeat = null;
 	$scope.betAmount = 0;
+	$scope.inAnnounce = false;
+	$scope.readyForNextRound = false;
+	$scope.inConfirmAllIn = false;
 	$rootScope.sittingOnTable = null;
 	var showingNotification = false;
 
@@ -242,6 +245,25 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 		});
 	}
 
+	$scope.allIn = function() {
+		$scope.inConfirmAllIn = true;
+	}
+
+	$scope.confirmAllIn = function() {
+		socket.emit( 'raise', $scope.maxBetAmount(), function( response ) {
+			if( response.success ) {
+				$scope.inConfirmAllIn = false;
+				sounds.playRaiseSound();
+				$scope.actionState = '';
+				$scope.$digest();
+			}
+		});
+	}
+
+	$scope.cancelAllIn = function() {
+		$scope.inConfirmAllIn = false;
+	}
+
 	// When the table data have changed
 	socket.on( 'table-data', function( data ) {
 		$scope.table = data;
@@ -334,4 +356,28 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 		$scope.$digest();
 	});
+
+	socket.on( 'table-announce', function() {
+		$scope.inAnnounce = true;
+
+		$scope.$digest();
+	});
+
+	socket.on( 'next-round', function() {
+		$scope.inAnnounce = false;
+
+		$scope.$digest();
+	});
+
+	$scope.nextRound = function() {
+		$scope.inAnnounce = true;
+
+		socket.emit( 'readyForNextRound', function( response ) {
+			if( response.success ) {
+				//$scope.table.seats[$scope.mySeat].readyForNextRound = true;
+				//$scope.inAnnounce = false;
+				//$scope.$digest();
+			}
+		});
+	}
 }]);

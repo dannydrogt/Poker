@@ -2,6 +2,12 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 	$scope.lobbyTables = [];
 	$scope.newScreenName = '';
 
+	if (window.localStorage) {
+		if (window.localStorage.getItem('pokerName')) {
+			$scope.newScreenName = window.localStorage.getItem('pokerName');
+		}
+	}
+
 	$http({
 		url: '/lobby-data',
 		method: 'GET'
@@ -16,6 +22,10 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 		if( $scope.newScreenName ) {
 			socket.emit( 'register', $scope.newScreenName, function( response ){
 				if( response.success ){
+					if (window.localStorage) {
+						window.localStorage.setItem('pokerName', response.screenName);
+					}
+
 					$rootScope.screenName = response.screenName;
 					$rootScope.totalChips = response.totalChips;
 					$scope.registerError = '';

@@ -388,6 +388,19 @@ io.sockets.on('connection', function( socket ) {
 			socket.broadcast.to( 'table-' + players[socket.id].room ).emit( 'receiveMessage', { 'message': htmlEntities( message ), 'sender': players[socket.id].public.name } );
 		}
 	});
+
+	/**
+	 * When a player who sits on the table but is not sitting in, requests to sit in
+	 * @param function callback
+	 */
+	socket.on('readyForNextRound', function( callback ) {
+		if( players[socket.id].sittingOnTable !== false && players[socket.id].seat !== null ) {
+			// Getting the table id from the player object
+			var tableId = players[socket.id].sittingOnTable;
+			tables[tableId].playerReadyForNextRound( players[socket.id].seat );
+			callback( { 'success': true } );
+		}
+	});
 });
 
 /**

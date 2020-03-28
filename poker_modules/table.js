@@ -1,4 +1,4 @@
-const SHOWDOWN_TIMEOUT = 5000;
+const SHOWDOWN_TIMEOUT = 1000;
 
 var Deck = require('./deck'),
 	Pot = require('./pot');
@@ -199,6 +199,10 @@ Table.prototype.findPreviousPlayer = function( offset, status ) {
 	}
 
 	return null;
+};
+
+Table.prototype.announceNextRound = function() {
+	this.emitEvent('table-announce', {});
 };
 
 /**
@@ -406,9 +410,6 @@ Table.prototype.showdown = function() {
 			notification: ''
 		});
 		this.emitEvent( 'table-data', this.public );
-
-		// TEST
-		//this.emitEvent( 'table-showdown', this.public );
 	}
 
 	var that = this;
@@ -793,7 +794,8 @@ Table.prototype.endRound = function() {
 	if( this.playersSittingInCount < 2 ) {
 		this.stopGame();
 	} else {
-		this.initializeRound();
+		//this.initializeRound();
+		this.announceNextRound();
 	}
 };
 
@@ -819,5 +821,46 @@ Table.prototype.log = function(log) {
 	this.public.log = null;
 	this.public.log = log;
 }
+
+Table.prototype.playerReadyForNextRound = function( seat ) {
+	this.log({
+		message: this.seats[seat].public.name + ' is klaar voor de volgende ronde',
+		action: '',
+		seat: '',
+		notification: ''
+	});
+
+	// The player is ready
+	this.seats[seat].public.readyForNextRound = true;
+	this.public.seats[seat].readyForNextRound = true;
+	this.emitEvent( 'table-data', this.public );
+
+	let allReady = true;
+
+	for (var i = 0; i < this.seats.length; i++) {
+		var cSeat = this.seats[i];
+
+		if (cSeat) {
+			//console.log(`Player ${cSeat.public.name} readyForNextRound: ${cSeat.public.readyForNextRound}`);
+			var ready = cSeat.public.readyForNextRound;
+
+			if (typeof ready == 'undefined' || ready == false) {
+				allReady = false;
+				break;
+			}
+		}
+	}
+
+	if (allReady) {
+		console.log('Everybody ready, initializing new round.');
+		this.emitEvent( 'next-round' );
+		this.initializeRound();		
+	}
+
+	// if( !this.gameIsOn && this.playersSittingInCount > 1 ) {
+	// 	// Initialize the game
+	// 	this.initializeRound( false );
+	// }
+};
 
 module.exports = Table;

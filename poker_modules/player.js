@@ -125,6 +125,7 @@ Player.prototype.prepareForNewRound = function() {
     this.public.bet = 0;
     this.public.inHand = true;
     this.evaluatedHand = {};
+    this.public.readyForNextRound = false;
 }
 
 /**

@@ -17,6 +17,7 @@ app.directive( 'seat', [function() {
 			sittingOnTable: '=',
 			dealerSeat: '=',
 			notifications: '=',
+			inAnnounce: '=',
 			showBuyInModal: '&'
 		},
 		link: function(scope, element, attributes) {
