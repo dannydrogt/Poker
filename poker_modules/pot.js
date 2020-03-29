@@ -1,3 +1,5 @@
+const _ = require('underscore');
+
 /**
  * The pot object
  */
@@ -124,6 +126,8 @@ Pot.prototype.createHtmlHand = function(htmlHand) {
 }
 
 Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
+  var result = {};
+  result.winners = [];
   var potsCount = this.pots.length;
   var messages = [];
 
@@ -143,6 +147,13 @@ Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
         }
       }
     }
+
+    for (var x = 0; x < winners.length; x++) {
+      if (result.winners.indexOf(winners[x]) == -1) {
+        result.winners.push(winners[x]);
+      }
+    }
+
     if( winners.length === 1 ) {
       players[winners[0]].public.chipsInPlay += this.pots[i].amount;
       var htmlHand = '[' + players[winners[0]].evaluatedHand.cards.join(', ') + ']';
@@ -172,9 +183,11 @@ Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
     }
   }
 
+  result.messages = messages;
+
   this.reset();
 
-  return messages;
+  return result;
 }
 
 /**
@@ -192,7 +205,7 @@ Pot.prototype.giveToWinner = function( winner ) {
   }
 
   this.reset();
-  return winner.public.name + ' wins the pot (' + totalAmount + ')';
+  return winner.public.name + ' wint de pot (' + totalAmount + ')';
 }
 
 /**

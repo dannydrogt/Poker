@@ -75,6 +75,8 @@ var Table = function( id, name, eventEmitter, seatsCount, bigBlind, smallBlind, 
 			seat: '',
 			action: ''
 		},
+		currentWinners: [],
+		inAnnounce: false
 	};
 	// Initializing the empty seats
 	for( var i=0 ; i<this.public.seatsCount ; i++ ) {
@@ -202,6 +204,9 @@ Table.prototype.findPreviousPlayer = function( offset, status ) {
 };
 
 Table.prototype.announceNextRound = function() {
+	this.public.inAnnounce = true;
+	this.public.biggestBet = 0;
+	this.emitEvent( 'table-data', this.public );
 	this.emitEvent('table-announce', {});
 };
 
@@ -209,6 +214,7 @@ Table.prototype.announceNextRound = function() {
  * Method that starts a new game
  */
 Table.prototype.initializeRound = function( changeDealer ) {
+	this.public.currentWinners = [];
 	changeDealer = typeof changeDealer == 'undefined' ? true : changeDealer ;
 
 	if( this.playersSittingInCount > 1 ) {
@@ -399,7 +405,11 @@ Table.prototype.showdown = function() {
 		currentPlayer = this.findNextPlayer( currentPlayer );
 	}
 	
-	var messages = this.pot.destributeToWinners( this.seats, currentPlayer );
+	//var messages = this.pot.destributeToWinners( this.seats, currentPlayer );
+	var winnerResult = this.pot.destributeToWinners( this.seats, currentPlayer );
+	var messages = winnerResult.messages;
+
+	this.public.currentWinners = winnerResult.winners;
 
 	var messagesCount = messages.length;
 	for( var i=0 ; i<messagesCount ; i++ ) {
@@ -412,10 +422,11 @@ Table.prototype.showdown = function() {
 		this.emitEvent( 'table-data', this.public );
 	}
 
-	var that = this;
-	setTimeout( function(){
-		that.endRound();
-	}, SHOWDOWN_TIMEOUT );
+	// var that = this;
+	// setTimeout( function(){
+	// 	that.endRound();
+	// }, SHOWDOWN_TIMEOUT );
+	this.endRound();
 };
 
 /**
@@ -485,10 +496,20 @@ Table.prototype.playerFolded = function() {
 
 	this.playersInHandCount--;
 	this.pot.removePlayer( this.public.activeSeat );
+
 	if( this.playersInHandCount <= 1 ) {
 		this.pot.addTableBets( this.seats );
 		var winnersSeat = this.findNextPlayer();
-		this.pot.giveToWinner( this.seats[winnersSeat] );
+		var winnerMessage = this.pot.giveToWinner( this.seats[winnersSeat] );
+		this.public.currentWinners = [winnersSeat];
+		this.emitEvent( 'table-data', this.public );
+		
+		this.log({
+			message: winnerMessage,
+			action: '',
+			seat: '',
+			notification: ''
+		});
 		this.endRound();
 	} else {
 		if( this.lastPlayerToAct == this.public.activeSeat ) {
@@ -780,6 +801,8 @@ Table.prototype.endRound = function() {
 	if( !this.pot.isEmpty() ) {
 		var winnersSeat = this.findNextPlayer( 0 );
 		this.pot.giveToWinner( this.seats[winnersSeat] );
+
+		// TODO: Check if pot is not reset??
 	}
 
 	// Sitting out the players who don't have chips
@@ -852,7 +875,8 @@ Table.prototype.playerReadyForNextRound = function( seat ) {
 	}
 
 	if (allReady) {
-		console.log('Everybody ready, initializing new round.');
+		//console.log('Everybody ready, initializing new round.');
+		this.public.inAnnounce = false;
 		this.emitEvent( 'next-round' );
 		this.initializeRound();		
 	}

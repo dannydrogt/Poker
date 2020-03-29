@@ -21,16 +21,16 @@
 			<a id="to-lobby" class="button" href="/" ng-show="!$root.sittingOnTable" ng-click="leaveRoom()">< Lobby</a>
 		</div>
 		<div class="cell">
-			<seat player="table.seats[0]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="0" cell-number="1" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[0]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="0" cell-number="1" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 		<div class="cell">
-			<seat player="table.seats[1]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="1" cell-number="2" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[1]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="1" cell-number="2" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 		<div class="cell"></div>
 	</div>
 	<div class="row">
 		<div class="cell">
-			<seat player="table.seats[5]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="5" cell-number="9" class="side" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[5]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="5" cell-number="9" class="side" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 		<div class="double-cell">
 			<div id="pot-wrap">
@@ -55,27 +55,31 @@
 			</div>
 		</div>
 		<div class="cell">
-			<seat player="table.seats[2]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="2" cell-number="4" class="side" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[2]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="2" cell-number="4" class="side" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 	</div>
 	<div class="row">
 		<div class="cell"></div>
 		<div class="cell">
-			<seat player="table.seats[4]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="4" cell-number="7" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[4]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="4" cell-number="7" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 		<div class="cell">
-			<seat player="table.seats[3]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="3" cell-number="6" in-announce="inAnnounce"></seat>
+			<seat player="table.seats[3]" active-seat="table.activeSeat" dealer-seat="table.dealerSeat" my-seat="mySeat" my-cards="myCards" sitting-on-table="$root.sittingOnTable" show-buy-in-modal="showBuyInModal(seat)" notifications="notifications" seat-index="3" cell-number="6" in-announce="table.inAnnounce" current-winners="table.currentWinners"></seat>
 		</div>
 		<div class="cell"></div>
 	</div>
 	<div class="row controls">
 		<div class="chat-cell">
-			<div id="chat" ng-controller="ChatController">
+			<div id="chat" ng-controller="ChatController" ng-class="{ 'chat-hidden': chatHidden }">
 				<div id="messages"></div>
 				<form ng-submit="sendMessage()">
 					<input type="text" ng-model="messageText">
 					<input type="submit" value="↵">
 				</form>
+				<div id="chat-toggle" ng-click="toggleChat()">
+					<span class="fas fa-chevron-left"></span>
+					<span class="fas fa-chevron-right"></span>
+				</div>
 			</div>
 		</div>
 		<div class="cell">
@@ -107,7 +111,7 @@
 			<button class="control-button" ng-click="cancelAllIn()">Annuleer</button>
 		</div>
 		<div class="cell">
-			<button class="control-button" ng-click="nextRound()" ng-show="inAnnounce && !table.seats[mySeat].readyForNextRound">Volgende ronde</button>
+			<button class="control-button" ng-click="nextRound()" ng-show="table.inAnnounce && !table.seats[mySeat].readyForNextRound">Volgende ronde</button>
 		</div>
 		<div class="double-cell">
 			<div class="cell-content">
@@ -123,4 +127,5 @@
 		<audio id="bet-sound" src="/audio/bet.wav" preload="auto">
 		<audio id="raise-sound" src="/audio/raise.wav" preload="auto">
 	</div>
+	<!-- <pre>{{table | json}}</pre> -->
 </div>

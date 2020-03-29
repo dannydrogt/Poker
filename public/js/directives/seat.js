@@ -18,6 +18,7 @@ app.directive( 'seat', [function() {
 			dealerSeat: '=',
 			notifications: '=',
 			inAnnounce: '=',
+			currentWinners: '=',
 			showBuyInModal: '&'
 		},
 		link: function(scope, element, attributes) {
@@ -37,7 +38,15 @@ app.directive( 'seat', [function() {
 			}
 
 			scope.seatOccupied = function( seat ) {
-				return !scope.sittingOnTable || ( typeof scope.player !== 'undefinde' && scope.player && scope.player.name );
+				return !scope.sittingOnTable || ( typeof scope.player !== 'undefined' && scope.player && scope.player.name );
+			}
+
+			scope.isCurrentWinner = function() {
+				return (scope.currentWinners && scope.currentWinners.indexOf(scope.seatIndex) > -1 && scope.sittingOnTable) || false;
+			}
+
+			scope.outHand = function() {
+				return scope.player && scope.player.sittingIn && !scope.player.inHand;
 			}
 		}
 	};

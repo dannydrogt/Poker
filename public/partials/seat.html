@@ -3,12 +3,12 @@
 		<div class="card" ng-show="seatOccupied(seatIndex)" ng-class="getCardClass( seatIndex, 0 )"></div>
 		<div class="card" ng-show="seatOccupied(seatIndex)" ng-class="getCardClass( seatIndex, 1 )"></div>
 	</div>
-	<div class="seat" ng-show="seatOccupied(seatIndex)" ng-class="{active: activeSeat===seatIndex}">
+	<div class="seat" ng-show="seatOccupied(seatIndex)" ng-class="{'active': activeSeat===seatIndex && !inAnnounce, 'out-hand': outHand(), 'winner': isCurrentWinner()}">
 		<a class="sitIn" ng-show="!player.name" ng-click="showBuyInModal( {seat:seatIndex} )">Neem plaats</a>
 		<div class="player-content" ng-show="player.name">
 			<div ng-show="!notifications[seatIndex].message">
 				<span><i class="fas fa-check" ng-show="inAnnounce && player.readyForNextRound"></i>{{player.name}}</span>
-				<span ng-show="player.sittingIn"><i class="fas fa-coins"></i> {{player.chipsInPlay}}</span>
+				<span class="player-coins" ng-show="player.sittingIn"><i class="fas fa-coins"></i> {{player.chipsInPlay}}</span>
 				<span ng-show="!player.sittingIn">Deelname gepauzeerd</span>
 			</div>
 			<div ng-show="notifications[seatIndex].message">
@@ -20,6 +20,12 @@
 	<div id="bets-{{cellNumber}}" class="bets">
 		<span ng-show="player.bet">{{player.bet}}</span>
 	</div>
-	<!-- <pre>{{inAnnounce}}</pre>
-	<pre>{{player | json}}</pre> -->
+	<!-- <pre>mySeat {{mySeat}}</pre>
+	<pre>activeSeat {{activeSeat}}</pre>
+	<pre>seatIndex {{seatIndex}}</pre>
+	<pre>inAnnounce {{inAnnounce}}</pre> -->
+	<!-- <pre>player {{player | json}}</pre>
+	<pre>sittingOnTable {{sittingOnTable}}</pre> -->
+	<!-- <pre>currentWinners {{currentWinners}}</pre>
+	<pre>{{currentWinners.indexOf(seatIndex)}}</pre> -->
 </div>

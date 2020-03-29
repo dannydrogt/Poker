@@ -14,7 +14,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.myCards = ['', ''];
 	$scope.mySeat = null;
 	$scope.betAmount = 0;
-	$scope.inAnnounce = false;
+	//$scope.inAnnounce = false;
 	$scope.readyForNextRound = false;
 	$scope.inConfirmAllIn = false;
 	$rootScope.sittingOnTable = null;
@@ -358,19 +358,19 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	});
 
 	socket.on( 'table-announce', function() {
-		$scope.inAnnounce = true;
+		//$scope.inAnnounce = true;
 
 		$scope.$digest();
 	});
 
 	socket.on( 'next-round', function() {
-		$scope.inAnnounce = false;
+		//$scope.inAnnounce = false;
 
 		$scope.$digest();
 	});
 
 	$scope.nextRound = function() {
-		$scope.inAnnounce = true;
+		//$scope.inAnnounce = true;
 
 		socket.emit( 'readyForNextRound', function( response ) {
 			if( response.success ) {

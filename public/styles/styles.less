@@ -829,10 +829,13 @@ div#board-wrap {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		position: relative;
 
 		#messages {
 			flex-grow: 1;
 			margin-bottom: 8px;
+			border-top-right-radius: 0;
+			border: none;
 
 			> div {
 				small {
@@ -863,6 +866,34 @@ div#board-wrap {
 
 			input[type='submit'] {
 				margin-right: 8px;
+			}
+		}
+
+		#chat-toggle {
+			span.fa-chevron-left {
+				display: inline-block;
+			}
+
+			span.fa-chevron-right {
+				display: none;
+			}
+		}
+
+		&.chat-hidden {
+			width: 8px;
+			
+			form, #messages {
+				display: none !important;
+			}
+
+			#chat-toggle {
+				span.fa-chevron-left {
+					display: none;
+				}
+
+				span.fa-chevron-right {
+					display: inline-block;
+				}
 			}
 		}
 	}
@@ -977,6 +1008,12 @@ div.seat {
 	}
 }
 
+div.seat.out-hand {
+    color: gray;
+    border: 5px solid gray;
+    box-shadow: 0 0 5px 0 gray;
+}
+
 div.seat.active {
     color: yellow;
     border: 5px solid yellow;
@@ -998,4 +1035,43 @@ button {
 			background-color: pink !important;
 		}
 	}
+}
+
+@keyframes winner-seat {
+	from { background-color: @purple; }
+	to { background-color: #0e4a0e; }
+}
+
+div.seat.winner {
+	animation-name: winner-seat;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	border-color: green;
+    box-shadow: 0 0 5px 0 green;
+	color: rgb(0,255,00);
+	
+	.player-coins {
+		//color: white;
+	}
+}
+
+div#chat-toggle {
+    display: flex;
+    width: 20px;
+    height: 40px;
+    color: black;
+    position: absolute;
+    right: -14px;
+    top: 8px;
+    background-color: white;
+    border: 1px solid white;
+    text-align: center;
+    line-height: 20px;
+    border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	font-size: 14px;
+	cursor: pointer;
+	align-items: center;
+    justify-content: center;
 }

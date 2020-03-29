@@ -7,6 +7,9 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 	/**
 	 * Chat
 	 */
+
+	$scope.chatHidden = false;
+
 	$scope.sendMessage = function() {
 		if ( $scope.messageText.trim() ) {
 			var message = $scope.messageText.trim();
@@ -18,6 +21,10 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 			messageBox.scrollTop = messageBox.scrollHeight;
 			$scope.messageText = '';
 		}
+	}
+
+	$scope.toggleChat = function() {
+		$scope.chatHidden = !$scope.chatHidden;
 	}
 
 	socket.on( 'receiveMessage', function( data ) {
