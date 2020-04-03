@@ -280,6 +280,7 @@ Table.prototype.initializeSmallBlind = function() {
 	// Start asking players to post the small blind
 	this.seats[this.public.activeSeat].socket.emit('postSmallBlind');
 	this.emitEvent( 'table-data', this.public );
+	this.emitActiveSeat();
 };
 
 /**
@@ -335,6 +336,7 @@ Table.prototype.initializeNextPhase = function() {
 	this.public.activeSeat = this.findNextPlayer( this.public.dealerSeat );
 	this.lastPlayerToAct = this.findPreviousPlayer( this.public.activeSeat );
 	this.emitEvent( 'table-data', this.public );
+	this.emitActiveSeat();
 
 	// If all other players are all in, there should be no actions. Move to the next round.
 	if( this.otherPlayersAreAllIn() ) {
@@ -384,6 +386,7 @@ Table.prototype.actionToNextPlayer = function() {
 	}
 
 	this.emitEvent( 'table-data', this.public );
+	this.emitActiveSeat();
 };
 
 /**
@@ -426,6 +429,7 @@ Table.prototype.showdown = function() {
 	// setTimeout( function(){
 	// 	that.endRound();
 	// }, SHOWDOWN_TIMEOUT );
+	this.emitEvent('round-ended');
 	this.endRound();
 };
 
@@ -885,6 +889,10 @@ Table.prototype.playerReadyForNextRound = function( seat ) {
 	// 	// Initialize the game
 	// 	this.initializeRound( false );
 	// }
+};
+
+Table.prototype.emitActiveSeat = function() {
+	this.emitEvent('active-seat-changed', this.public.activeSeat);
 };
 
 module.exports = Table;

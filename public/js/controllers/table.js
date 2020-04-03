@@ -17,6 +17,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	//$scope.inAnnounce = false;
 	$scope.readyForNextRound = false;
 	$scope.inConfirmAllIn = false;
+	$scope.soundsMuted = false;
 	$rootScope.sittingOnTable = null;
 	var showingNotification = false;
 
@@ -188,7 +189,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 			if( response.success && !posted ) {
 				$rootScope.sittingIn = false;
 			} else {
-				sounds.playBetSound();
+				playSound('playBetSound');
 			}
 			$scope.actionState = '';
 			$scope.$digest();
@@ -198,7 +199,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.check = function() {
 		socket.emit( 'check', function( response ) {
 			if( response.success ) {
-				sounds.playCheckSound();
+				playSound('playCheckSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -208,7 +209,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.fold = function() {
 		socket.emit( 'fold', function( response ) {
 			if( response.success ) {
-				sounds.playFoldSound();
+				playSound('playFoldSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -218,7 +219,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.call = function() {
 		socket.emit( 'call', function( response ) {
 			if( response.success ) {
-				sounds.playCallSound();
+				playSound('playCallSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -228,7 +229,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.bet = function() {
 		socket.emit( 'bet', $scope.betAmount, function( response ) {
 			if( response.success ) {
-				sounds.playBetSound();
+				playSound('playBetSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -238,7 +239,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.raise = function() {
 		socket.emit( 'raise', $scope.betAmount, function( response ) {
 			if( response.success ) {
-				sounds.playRaiseSound();
+				playSound('playRaiseSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -253,7 +254,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 		socket.emit( 'raise', $scope.maxBetAmount(), function( response ) {
 			if( response.success ) {
 				$scope.inConfirmAllIn = false;
-				sounds.playRaiseSound();
+				playSound('playRaiseSound');
 				$scope.actionState = '';
 				$scope.$digest();
 			}
@@ -269,19 +270,19 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 		$scope.table = data;
 		switch ( data.log.action ) {
 			case 'fold':
-				sounds.playFoldSound();
+				playSound('playFoldSound');
 				break;
 			case 'check':
-				sounds.playCheckSound();
+				playSound('playCheckSound');
 				break;
 			case 'call':
-				sounds.playCallSound();
+				playSound('playCallSound');
 				break;
 			case 'bet':
-				sounds.playBetSound();
+				playSound('playBetSound');
 				break;
 			case 'raise':
-				sounds.playRaiseSound();
+				playSound('playRaiseSound');
 				break;
 		}
 		if( data.log.message ) {
@@ -369,14 +370,29 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 		$scope.$digest();
 	});
 
-	$scope.nextRound = function() {
-		//$scope.inAnnounce = true;
+	socket.on( 'round-ended', function() {
+		playSound('playEndTurnSound');
+	});
 
+	socket.on('active-seat-changed', function(data) {
+		if ($scope.table && $scope.mySeat == data) {
+			playSound('playNotificationSound');
+			//document.getElementsByTagName('body')[0].classList.add('active-turn');
+		}
+		else {
+			//document.getElementsByTagName('body')[0].classList.remove('active-turn');
+		}
+	});
+
+	function playSound(soundType) {
+		if (!$scope.soundsMuted) {
+			sounds[soundType]();
+		}
+	}
+
+	$scope.nextRound = function() {
 		socket.emit( 'readyForNextRound', function( response ) {
 			if( response.success ) {
-				//$scope.table.seats[$scope.mySeat].readyForNextRound = true;
-				//$scope.inAnnounce = false;
-				//$scope.$digest();
 			}
 		});
 	}

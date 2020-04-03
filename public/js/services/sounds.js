@@ -7,6 +7,8 @@ app.factory('sounds', [function() {
 		checkSound = document.getElementById("check-sound"),
 		callSound = document.getElementById("call-sound"),
 		betSound = document.getElementById("bet-sound"),
+		endTurnSound = document.getElementById("end-turn-sound"),
+		notificationSound = document.getElementById("notification-sound"),
 		raiseSound = document.getElementById("raise-sound");
 
     return {
@@ -24,6 +26,12 @@ app.factory('sounds', [function() {
     	},
     	playRaiseSound: function() {
     		raiseSound.play();
-    	}
+		},
+		playEndTurnSound: function() {
+			endTurnSound.play();
+		},
+		playNotificationSound: function() {
+			notificationSound.play();
+		}
     };
 }]);

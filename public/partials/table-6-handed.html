@@ -69,6 +69,7 @@
 		<div class="cell"></div>
 	</div>
 	<div class="row controls">
+		<div class="controls-inner">
 		<div class="chat-cell">
 			<div id="chat" ng-controller="ChatController" ng-class="{ 'chat-hidden': chatHidden }">
 				<div id="messages"></div>
@@ -117,6 +118,10 @@
 			<div class="cell-content">
 				<input type="range" ng-show="showBetRange()" min="{{minBetAmount()}}" max="{{maxBetAmount()}}" ng-model="betAmount">
 				<input type="number" id="bet-input" ng-show="showBetInput()" min="{{minBetAmount()}}" max="{{maxBetAmount()}}" ng-model="betAmount" value="{{betAmount}}">
+				</div>
+			</div>
+			<div class="options-cell">
+				<input type="checkbox" id="mute-sounds" ng-model="soundsMuted" /><label for="mute-sounds">Geluiden dempen</label>
 			</div>
 		</div>
 	</div>
@@ -126,6 +131,8 @@
 		<audio id="call-sound" src="/audio/call.wav" preload="auto">
 		<audio id="bet-sound" src="/audio/bet.wav" preload="auto">
 		<audio id="raise-sound" src="/audio/raise.wav" preload="auto">
+		<audio id="end-turn-sound" src="/audio/end-turn.wav" preload="auto">
+		<audio id="notification-sound" src="/audio/notification.wav" preload="auto">
 	</div>
 	<!-- <pre>{{table | json}}</pre> -->
 </div>

@@ -30,7 +30,7 @@ input[type="text"], input[type="number"] {
 }
 
 input {
-    -webkit-appearance: none;
+    //-webkit-appearance: none;
     border-radius: 0;
 }
 
@@ -1074,4 +1074,43 @@ div#chat-toggle {
 	cursor: pointer;
 	align-items: center;
     justify-content: center;
+}
+
+div.player-wrap.right {
+    margin-left: -30%;
+}
+
+div.player-wrap.bottom {
+    margin-top: -45%;
+}
+
+body.active-turn {
+	background-color: darkblue;
+}
+
+.controls-inner {
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.options-cell {
+	position: absolute;
+    bottom: 40px;
+    left: 0;
+	height: 40px;
+	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	
+	input {
+		appearance: checkbox;
+	}
+
+	label {
+		color: white;
+		cursor: pointer;
+	}
 }
