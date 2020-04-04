@@ -375,6 +375,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	});
 
 	socket.on('active-seat-changed', function(data) {
+		console.log(data);
 		if ($scope.table && $scope.mySeat == data) {
 			playSound('playNotificationSound');
 			//document.getElementsByTagName('body')[0].classList.add('active-turn');
