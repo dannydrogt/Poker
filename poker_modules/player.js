@@ -5,7 +5,11 @@
  * @param string name (the user's screen name)
  * @param int chips (the total amount of chip the user has)
  */
-var Player = function( socket, name, chips ) {
+var Player = function( socket, name, chips, opts ) {
+    this.opts = Object.assign({
+        isAdmin: false
+    }, opts);
+
 	this.public = {
 		// The name of the user
 		name: name,
@@ -20,7 +24,9 @@ var Player = function( socket, name, chips ) {
         // The cards the player is holding, made public at the showdown
         cards: [],
         // The amount the player has betted in the current round
-        bet: 0
+        bet: 0,
+        // Custom dictionary
+        opts: this.opts
 	};
 	// The socket object of the user
 	this.socket = socket;
@@ -35,7 +41,7 @@ var Player = function( socket, name, chips ) {
 	// The cards that the player is holding
 	this.cards = [];
 	// The hand that the player has in the current poker round and its rating
-	this.evaluatedHand = {};
+    this.evaluatedHand = {};    
 }
 
 /**
@@ -138,7 +144,7 @@ Player.prototype.evaluateHand = function( board ) {
 	var cardNamess = [ '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' ];
     var cardNames = { 'A': 'ace', 'K': 'king', 'Q': 'queen', 'J': 'jack', 'T': 'ten', '9': 'nine', '8': 'eight', '7': 'seven', '6': 'six', '5': 'five', '4': 'four', '3': 'three', '2': 'deuce' }
     var cardNamesSingular = { 'A': 'aas', 'K': 'heer', 'Q': 'vrouw', 'J': 'boer', 'T': 'tien', '9': 'negen', '8': 'acht', '7': 'zeven', '6': 'zes', '5': 'vijf', '4': 'vier', '3': 'drie', '2': 'twee' }
-    var cardNamesPlural = { 'A': 'azen', 'K': 'heren', 'Q': 'vouwen', 'J': 'boeren', 'T': 'tienen', '9': 'negens', '8': 'achten', '7': 'zevens', '6': 'zessen', '5': 'vijven', '4': 'vieren', '3': 'drieën', '2': 'tweeën' }
+    var cardNamesPlural = { 'A': 'azen', 'K': 'heren', 'Q': 'vrouwen', 'J': 'boeren', 'T': 'tienen', '9': 'negens', '8': 'achten', '7': 'zevens', '6': 'zessen', '5': 'vijven', '4': 'vieren', '3': 'drieën', '2': 'tweeën' }
 
     // Returns the name of the card, in singular or in plural
     var getCardName = function( cardValue, plural ) {

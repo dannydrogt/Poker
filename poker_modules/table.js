@@ -205,7 +205,8 @@ Table.prototype.findPreviousPlayer = function (offset, status) {
 
 Table.prototype.announceNextRound = function () {
 	this.public.inAnnounce = true;
-	this.public.biggestBet = 0;
+	//this.public.biggestBet = 0;
+	this.setBiggestBet(0);
 	this.emitEvent('table-data', this.public);
 	this.emitEvent('table-announce', {});
 };
@@ -332,7 +333,8 @@ Table.prototype.initializeNextPhase = function () {
 	}
 
 	this.pot.addTableBets(this.seats);
-	this.public.biggestBet = 0;
+	//this.public.biggestBet = 0;
+	this.setBiggestBet(0);
 	this.setActiveSeat(this.findNextPlayer(this.public.dealerSeat));
 	this.lastPlayerToAct = this.findPreviousPlayer(this.public.activeSeat);
 	this.emitEvent('table-data', this.public);
@@ -462,7 +464,8 @@ Table.prototype.playerPostedSmallBlind = function () {
 		seat: this.public.activeSeat,
 		notification: 'Blind ingezet'
 	});
-	this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
+	//this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
+	this.setBiggestBet(this.public.biggestBet < bet ? bet : this.public.biggestBet);
 	this.emitEvent('table-data', this.public);
 	this.initializeBigBlind();
 };
@@ -480,7 +483,8 @@ Table.prototype.playerPostedBigBlind = function () {
 		seat: this.public.activeSeat,
 		notification: 'Blind ingezet'
 	});
-	this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
+	//this.public.biggestBet = this.public.biggestBet < bet ? bet : this.public.biggestBet;
+	this.setBiggestBet(this.public.biggestBet < bet ? bet : this.public.biggestBet);
 	this.emitEvent('table-data', this.public);
 	this.initializePreflop();
 };
@@ -572,7 +576,7 @@ Table.prototype.playerCalled = function () {
  */
 Table.prototype.playerBetted = function (amount) {
 	this.seats[this.public.activeSeat].bet(amount);
-	this.public.biggestBet = this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet;
+	this.setBiggestBet(this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet);
 
 	this.log({
 		message: this.seats[this.public.activeSeat].public.name + ' zet ' + amount + ' in',
@@ -598,7 +602,8 @@ Table.prototype.playerBetted = function (amount) {
 Table.prototype.playerRaised = function (amount) {
 	this.seats[this.public.activeSeat].raise(amount);
 	var oldBiggestBet = this.public.biggestBet;
-	this.public.biggestBet = this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet;
+	//this.public.biggestBet = this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet;
+	this.setBiggestBet(this.public.biggestBet < this.seats[this.public.activeSeat].public.bet ? this.seats[this.public.activeSeat].public.bet : this.public.biggestBet);
 	var raiseAmount = this.public.biggestBet - oldBiggestBet;
 	this.log({
 		message: this.seats[this.public.activeSeat].public.name + ' verhoogt naar ' + this.public.biggestBet,
@@ -908,5 +913,10 @@ Table.prototype.setActiveSeat = function (seat) {
 Table.prototype.emitActiveSeat = function () {
 	this.emitEvent('active-seat-changed', this.public.activeSeat);
 };
+
+Table.prototype.setBiggestBet = function (amount) {
+	//console.log('setBiggestBet', amount);
+	this.public.biggestBet = amount;
+}
 
 module.exports = Table;

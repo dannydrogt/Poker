@@ -1114,3 +1114,49 @@ body.active-turn {
 		cursor: pointer;
 	}
 }
+
+.admin-button {
+    padding: 8px;
+    font-size: 12px;
+    margin: 0 4px;
+}
+
+.player-extra {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.player-extra__poster {
+	width: 50px;
+	position: relative;
+	left: -52px;
+	opacity: 0;
+	transition: all 0.5s;
+
+	&.visible {
+		opacity: 1;
+	}
+}
+
+#overlay {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+}
+
+.overlay__inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+}

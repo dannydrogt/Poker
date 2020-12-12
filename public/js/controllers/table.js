@@ -265,6 +265,32 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 		$scope.inConfirmAllIn = false;
 	}
 
+	$scope.adminCommand = function(payload) {
+		socket.emit('adminCommand', payload);
+	}
+
+	socket.on( 'doAdminCommand', function(command) {
+		switch (command.type) {
+			case 'playSound':
+				sounds['play'](command.name);
+				break;
+			case 'playScene':
+				sounds['play'](command.name);
+				playScene(command.name, command.duration);
+				break;
+		};
+	});
+
+	function playScene(scene, duration) {
+		$("#overlay .overlay__inner").empty().append('<img src="/images/' + scene + '.gif" />').parent().fadeIn();
+		
+		window.setTimeout(function() {
+			$("#overlay").fadeOut(400, function() {
+				$("#overlay .overlay__inner").empty();
+			});
+		}, duration);
+	}
+
 	// When the table data have changed
 	socket.on( 'table-data', function( data ) {
 		$scope.table = data;
@@ -375,7 +401,6 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	});
 
 	socket.on('active-seat-changed', function(data) {
-		console.log(data);
 		if ($scope.table && $scope.mySeat == data) {
 			playSound('playNotificationSound');
 			//document.getElementsByTagName('body')[0].classList.add('active-turn');

@@ -1,5 +1,18 @@
 require('dotenv').config();
 
+function parseCookies (request) {
+	var list = {};
+	//var rc = request.headers.cookie;
+	var rc = request;
+
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
+}
+
 var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
@@ -147,6 +160,32 @@ io.sockets.on('connection', function( socket ) {
 	 * @param function callback
 	 */
 	socket.on('register', function( newScreenName, callback ) {
+		let startChips = 1000;
+		let isAdmin = false;
+
+		console.log('register');
+
+		if (socket.client.request.headers.cookie) {
+			const cookies = parseCookies(socket.client.request.headers.cookie);
+			console.log('cookies', cookies);
+
+			if (cookies.money) {
+				if ((money = parseInt(cookies.money)) != NaN) {
+					console.log('Setting starting chips money');
+					startChips = money;
+				}
+			}
+
+			if (cookies.admin && cookies.admin == 'true') {
+				console.log('Setting admin');
+				isAdmin = true;
+			}
+		}
+
+		let opts = {
+			isAdmin: isAdmin
+		};
+
 		// If a new screen name is posted
 		if( typeof newScreenName !== 'undefined' ) {
 			var newScreenName = newScreenName.trim();
@@ -161,7 +200,7 @@ io.sockets.on('connection', function( socket ) {
 				}
 				if( !nameExists ) {
 					// Creating the player object
-					players[socket.id] = new Player( socket, newScreenName, 1000 );
+					players[socket.id] = new Player( socket, newScreenName, startChips, opts );
 					callback( { 'success': true, screenName: newScreenName, totalChips: players[socket.id].chips } );
 				} else {
 					callback( { 'success': false, 'message': 'This name is taken' } );
@@ -400,6 +439,12 @@ io.sockets.on('connection', function( socket ) {
 			tables[tableId].playerReadyForNextRound( players[socket.id].seat );
 			callback( { 'success': true } );
 		}
+	});
+
+	socket.on('adminCommand', function( payload ) {
+		console.log('adminCommand received', payload);
+		io.sockets.in( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', payload )
+		//socket.broadcast.to( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', payload );
 	});
 });
 

@@ -9,7 +9,10 @@ app.factory('sounds', [function() {
 		betSound = document.getElementById("bet-sound"),
 		endTurnSound = document.getElementById("end-turn-sound"),
 		notificationSound = document.getElementById("notification-sound"),
-		raiseSound = document.getElementById("raise-sound");
+		raiseSound = document.getElementById("raise-sound"),
+		iedereenboptSound = document.getElementById("iedereenbopt-sound"),
+		ladadaSound = document.getElementById("ladada-sound")
+		;
 
     return {
     	playFoldSound: function() {
@@ -32,6 +35,13 @@ app.factory('sounds', [function() {
 		},
 		playNotificationSound: function() {
 			notificationSound.play();
+		},
+		play: function(name) {
+			let toPlay = document.getElementById(name + "-sound");
+
+			if (toPlay) {
+				toPlay.play();
+			}
 		}
     };
 }]);

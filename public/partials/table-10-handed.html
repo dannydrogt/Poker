@@ -132,6 +132,15 @@
 			</div>
 		</div>
 	</div>
+	<div id="admin">
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'iedereenbopt'})">Iedereen bopt</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'ladada', 'duration': 11000})">Ladada</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'rick', 'duration': 11000})">Rick</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'winnaar', 'duration': 6000})">Winnaar</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'bier', 'duration': 3000})">Bier</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'acht', 'duration': 6000})">(N)acht</button>
+		<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'lala'})">Oeh lala</button>
+	</div>
 	<div id="audio">
 		<audio id="fold-sound" src="/audio/fold.wav" preload="auto">
 		<audio id="check-sound" src="/audio/check.wav" preload="auto">
@@ -140,6 +149,14 @@
 		<audio id="raise-sound" src="/audio/raise.wav" preload="auto">
 		<audio id="end-turn-sound" src="/audio/end-turn.wav" preload="auto">
 		<audio id="notification-sound" src="/audio/notification.wav" preload="auto">
+		<audio id="ladada-sound" src="/audio/ladada.wav" preload="auto">
+		<audio id="iedereenbopt-sound" src="/audio/iedereenbopt.wav" preload="auto">
+		<audio id="rick-sound" src="/audio/rick.wav" preload="auto">
+		<audio id="winnaar-sound" src="/audio/winnaar.wav" preload="auto">
+		<audio id="bier-sound" src="/audio/bier.wav" preload="auto">
+		<audio id="acht-sound" src="/audio/acht.wav" preload="auto">
+		<audio id="lala-sound" src="/audio/lala.wav" preload="auto">
 	</div>
 	<!-- <pre>{{table | json}}</pre> -->
+	<div id="overlay"><div class="overlay__inner"></div></div>
 </div>

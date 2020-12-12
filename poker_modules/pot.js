@@ -178,7 +178,7 @@ Pot.prototype.destributeToWinners = function( players, firstPlayerToAct ) {
         var htmlHand = '[' + players[winners[j]].evaluatedHand.cards.join(', ') + ']';
         htmlHand = this.createHtmlHand(htmlHand);
         //htmlHand = htmlHand.replace('&#9824;', '<span class="black">&#9824;</span>').replace('&#9827;', '<span class="black">&#9827;</span>').replace('&#9829;', '<span class="red">&#9829;</span>').replace('&#9830;', '<span class="red">&#9830;</span>');
-        messages.push( players[winners[j]].public.name + ' ties the pot (' + playersWinnings + ') with ' + players[winners[j]].evaluatedHand.name + ' ' + htmlHand );
+        messages.push( players[winners[j]].public.name + ' deelt de pot (' + playersWinnings + ') met ' + players[winners[j]].evaluatedHand.name + ' ' + htmlHand );
       }
     }
   }

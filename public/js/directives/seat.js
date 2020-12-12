@@ -48,6 +48,18 @@ app.directive( 'seat', [function() {
 			scope.outHand = function() {
 				return scope.player && scope.player.sittingIn && !scope.player.inHand;
 			}
+
+			scope.$watch('player.chipsInPlay', function(newVal, oldVal) {
+				if (newVal && oldVal) {
+					if (newVal >= POSTER_AMOUNT && oldVal < POSTER_AMOUNT) {
+						socket.emit('adminCommand', { 'type': 'playSound', 'name': 'lala' });
+					}
+				}
+			});
+
+			scope.getPosterAmount = function() {
+				return window.POSTER_AMOUNT;
+			}
 		}
 	};
 }]);

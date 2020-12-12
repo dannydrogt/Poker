@@ -1,4 +1,7 @@
 <div class="player-wrap">
+	<div class="player-extra">
+		<img class="player-extra__poster" ng-class="{ visible: player.chipsInPlay >= getPosterAmount() }" src="/images/poster.jpg" />
+	</div>
 	<div class="player-cards" ng-class="{dealt: player.hasCards}">
 		<div class="card" ng-show="seatOccupied(seatIndex)" ng-class="getCardClass( seatIndex, 0 )"></div>
 		<div class="card" ng-show="seatOccupied(seatIndex)" ng-class="getCardClass( seatIndex, 1 )"></div>
@@ -20,6 +23,7 @@
 	<div id="bets-{{cellNumber}}" class="bets">
 		<span ng-show="player.bet">{{player.bet}}</span>
 	</div>
+	<!-- <pre>{{player | json}}</pre> -->
 	<!-- <pre>mySeat {{mySeat}}</pre> -->
 	<!-- <pre>activeSeat {{activeSeat}}</pre>
 	<pre>seatIndex {{seatIndex}}</pre>
