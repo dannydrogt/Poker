@@ -1139,6 +1139,33 @@ body.active-turn {
 	}
 }
 
+#admin {
+	position: fixed;
+    bottom: 0;
+    left: 220px;
+    right: 220px;
+	height: 100px;
+	
+	.buttons, .console {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.console {
+		margin-top: 6px;
+		
+		input {
+			font-size: 0.8em;
+			min-width: 300px;
+		}
+	}
+	
+	button {
+		margin: 0 4px;
+	}
+}
+
 #overlay {
 	width: 100vw;
 	height: 100vh;

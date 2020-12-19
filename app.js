@@ -443,8 +443,21 @@ io.sockets.on('connection', function( socket ) {
 
 	socket.on('adminCommand', function( payload ) {
 		console.log('adminCommand received', payload);
-		io.sockets.in( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', payload )
-		//socket.broadcast.to( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', payload );
+
+		if (payload.type == 'table') {
+			if (payload.name == 'endPhase') {
+				var tableId = players[socket.id].sittingOnTable;
+				var table = tables[tableId];
+				io.sockets.in( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', {'type': 'setActionState', 'name': ''} );
+				table.setBiggestBet(0);
+				table.setActiveSeat(table.findNextPlayer(table.public.dealerSeat));
+				table.lastPlayerToAct = table.findPreviousPlayer(table.public.activeSeat);
+				table.endPhase();
+			}
+		}
+		else {
+			io.sockets.in( 'table-' + players[socket.id].room ).emit( 'doAdminCommand', payload )
+		}
 	});
 });
 

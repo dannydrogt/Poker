@@ -132,14 +132,20 @@
 			</div>
 		</div>
 	</div>
-	<div id="admin">
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'iedereenbopt'})">Iedereen bopt</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'ladada', 'duration': 11000})">Ladada</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'rick', 'duration': 11000})">Rick</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'winnaar', 'duration': 6000})">Winnaar</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'bier', 'duration': 3000})">Bier</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'acht', 'duration': 6000})">(N)acht</button>
-		<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'lala'})">Oeh lala</button>
+	<div id="admin" ng-show="mySeatIsAdmin()">
+		<div class="buttons">
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'iedereenbopt'})">Iedereen bopt</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'ladada', 'duration': 11000})">Ladada</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'rick', 'duration': 11000})">Rick</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'winnaar', 'duration': 6000})">Winnaar</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'bier', 'duration': 3000})">Bier</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playScene', 'name': 'acht', 'duration': 6000})">(N)acht</button>
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'playSound', 'name': 'lala'})">Oeh lala</button>
+		</div>
+		<div class="console">
+			<button class="admin-button" ng-click="adminCommand({ 'type': 'table', 'name': 'endPhase'})">End phase</button>
+			<!-- <input type="text" ng-model="consoleCommand" ng-keypress="handleConsoleKey($event)" /> -->
+		</div>
 	</div>
 	<div id="audio">
 		<audio id="fold-sound" src="/audio/fold.wav" preload="auto">
@@ -157,6 +163,7 @@
 		<audio id="acht-sound" src="/audio/acht.wav" preload="auto">
 		<audio id="lala-sound" src="/audio/lala.wav" preload="auto">
 	</div>
+	<!-- <pre>{{mySeatIsAdmin()}}</pre> -->
 	<!-- <pre>{{table | json}}</pre> -->
 	<div id="overlay"><div class="overlay__inner"></div></div>
 </div>

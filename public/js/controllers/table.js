@@ -19,6 +19,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.inConfirmAllIn = false;
 	$scope.soundsMuted = false;
 	$rootScope.sittingOnTable = null;
+	$scope.consoleCommand = '';
 	var showingNotification = false;
 
 	// Existing listeners should be removed
@@ -278,6 +279,9 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 				sounds['play'](command.name);
 				playScene(command.name, command.duration);
 				break;
+			case 'setActionState':
+				$scope.actionState = command.name;
+				break;
 		};
 	});
 
@@ -421,5 +425,24 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 			if( response.success ) {
 			}
 		});
+	};
+
+	$scope.mySeatIsAdmin = function() {
+		if ($scope.mySeat) {
+			if ($scope.table.seats && $scope.table.seats[$scope.mySeat]) {
+				if ($scope.table.seats[$scope.mySeat].opts) {
+					return $scope.table.seats[$scope.mySeat].opts.isAdmin;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	$scope.handleConsoleKey = function(keyEvent) {
+		if (keyEvent.which === 13) {
+			socket.emit('adminCommand', JSON.parse($scope.consoleCommand));
+			$scope.consoleCommand = '';
+		}
 	}
 }]);
